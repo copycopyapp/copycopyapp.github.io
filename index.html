@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>copycopy — Private Clipboard Manager for iOS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #FAFAF9;
+            --text: #1C1917;
+            --muted: #78716C;
+            --accent: #2563EB;
+            --border: #E7E5E4;
+            --card: #FFFFFF;
+            --green: #16A34A;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0C0A09;
+                --text: #FAFAF9;
+                --muted: #A8A29E;
+                --accent: #60A5FA;
+                --border: #292524;
+                --card: #1C1917;
+                --green: #4ADE80;
+            }
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            padding: 80px 0 48px;
+            text-align: center;
+        }
+
+        .app-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 18px;
+            display: inline-block;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .app-icon img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 12px;
+        }
+
+        .tagline {
+            font-size: 1.15rem;
+            color: var(--muted);
+            max-width: 480px;
+            margin: 0 auto 32px;
+        }
+
+        .badge-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .badge .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+        }
+
+        /* Sections */
+        section {
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+
+        h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 28px 0 8px;
+        }
+
+        h3:first-of-type {
+            margin-top: 0;
+        }
+
+        p {
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 500px) {
+            .features { grid-template-columns: 1fr; }
+            h1 { font-size: 2rem; }
+            header { padding: 56px 0 36px; }
+        }
+
+        .feature {
+            padding: 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .feature-title {
+            font-family: 'DM Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+
+        .feature p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        /* Support */
+        .support-email {
+            display: inline-block;
+            font-family: 'DM Mono', monospace;
+            font-size: 1rem;
+            color: var(--accent);
+            text-decoration: none;
+            padding: 12px 24px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            transition: border-color 0.2s;
+        }
+
+        .support-email:hover {
+            border-color: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            padding: 48px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--muted);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--text);
+        }
+
+        /* Privacy policy text */
+        .privacy-text p {
+            font-size: 0.95rem;
+            color: var(--text);
+            opacity: 0.85;
+        }
+
+        .emphasis {
+            font-style: italic;
+            color: var(--text);
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <header>
+            <div class="app-icon">
+                <img src="icon.png" alt="copycopy app icon">
+            </div>
+            <h1>copycopy</h1>
+            <p class="tagline">A private clipboard manager for iPhone. Your snippets stay on your device — no accounts, no cloud, no tracking.</p>
+            <div class="badge-row">
+                <span class="badge"><span class="dot"></span> 100% local storage</span>
+                <span class="badge">No subscription</span>
+                <span class="badge">No analytics</span>
+            </div>
+        </header>
+
+        <section>
+            <h2>Features</h2>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-title">keyboard</div>
+                    <p>Access your clipboard history from any app with the custom keyboard.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">detection</div>
+                    <p>Auto-detects phone numbers, URLs, emails, tracking numbers, and more.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">organize</div>
+                    <p>Pin, tag, and name snippets. Keep important items with the Keeper tag.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">private</div>
+                    <p>Biometric lock, sensitive data masking, and zero network connections.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">widget</div>
+                    <p>Quick access to your pinned items right from the home screen.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-title">one-time purchase</div>
+                    <p>Free with 8 snippets. Unlock up to 1000 with a single payment.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Support</h2>
+            <p>Questions, feedback, or issues? Reach out anytime.</p>
+            <br>
+            <a href="mailto:copycopyapp@gmail.com" class="support-email">copycopyapp@gmail.com</a>
+        </section>
+
+        <section id="privacy">
+            <h2>Privacy Policy</h2>
+            <div class="privacy-text">
+                <p><strong>Last updated: February 2026</strong></p>
+
+                <h3>Data Storage</h3>
+                <p>copycopy stores your clipboard history locally on your device. All data remains on your device and is never transmitted to us or any third party.</p>
+
+                <h3>No Data Collection</h3>
+                <p>We do not collect, access, or receive any of your data. Your clipboard content, images, and personal information never leave your device unless you explicitly choose to share them.</p>
+
+                <h3>User-Initiated Sharing</h3>
+                <p>Data only leaves the app when you take an action: copying to the clipboard, using action buttons (call, email, open URL, track package), or using the system share sheet. These actions use standard iOS features and go directly to the destination app — copycopy never intercepts or logs this activity.</p>
+
+                <h3>Keyboard Extension</h3>
+                <p>The copycopy keyboard requires Full Access to read from the shared App Group container. This permission is necessary to display your saved snippets. Despite the iOS warning, the keyboard does not and cannot transmit data over the network — it only reads from local storage.</p>
+
+                <h3>Spotlight Search</h3>
+                <p>When enabled, copycopy indexes your snippets for Spotlight search. This index is stored locally by iOS and is not shared with Apple or any third party.</p>
+
+                <h3>No Analytics or Tracking</h3>
+                <p>copycopy contains no analytics, tracking, advertising, or crash reporting code. We have zero visibility into how you use the app or what you store in it.</p>
+
+                <h3>In-App Purchases</h3>
+                <p>Purchases are processed entirely by Apple through the App Store. We do not receive or have access to your payment information.</p>
+
+                <h3>Data Deletion</h3>
+                <p>You have full control over your data. Delete individual items anytime, or clear everything at once. Deleted items move to trash and are permanently erased after 30 days, or immediately when you empty the trash. Uninstalling the app removes all data.</p>
+
+                <h3>Your Privacy, Simply</h3>
+                <p class="emphasis">Nothing you store in copycopy is ever sent to us or anyone else. The developer cannot see your data. There are no servers, no accounts, no cloud sync outside your control. Your clipboard history is yours alone.</p>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 copycopy &middot; <a href="#privacy">Privacy Policy</a> &middot; <a href="mailto:copycopyapp@gmail.com">Contact</a></p>
+        </footer>
+
+    </div>
+</body>
+</html>
