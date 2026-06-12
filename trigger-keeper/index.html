@@ -85,50 +85,17 @@
     position: relative;
   }
 
-  .icon-badge {
+  /* Real app icon. The source PNG is square (iOS applies its own mask on
+     device), so the web rounds it here: 30px on 132px approximates the
+     iOS squircle and matches the original badge geometry. */
+  .app-icon {
+    display: block;
     width: 132px; height: 132px;
     margin: 0 auto 28px;
     border-radius: 30px;
-    background: var(--cream);
     border: var(--outline) solid var(--ink);
     box-shadow: 7px 7px 0 var(--ink);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-  /* CSS-drawn placeholder mark: a checker corner + a coral shutter dot.
-     Swap this whole .icon-badge block for <img src="icon.png"> once the
-     real app icon exists. */
-  .icon-badge::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(45deg, var(--ink) 25%, transparent 25%),
-      linear-gradient(-45deg, var(--ink) 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, var(--ink) 75%),
-      linear-gradient(-45deg, transparent 75%, var(--ink) 75%);
-    background-size: 22px 22px;
-    background-position: 0 0, 0 11px, 11px -11px, -11px 0;
-    opacity: 0.18;
-  }
-  .icon-badge .dot {
-    width: 58px; height: 58px;
-    border-radius: 50%;
-    background: var(--coral);
-    border: var(--outline) solid var(--ink);
-    position: relative;
-    z-index: 1;
-  }
-  .icon-badge .dot::after {
-    content: "";
-    position: absolute;
-    inset: 12px;
-    border-radius: 50%;
     background: var(--cream);
-    border: 2px solid var(--ink);
   }
 
   h1.wordmark {
@@ -309,7 +276,7 @@
 
   <header class="hero">
     <div class="wrap">
-      <div class="icon-badge reveal d1"><span class="dot"></span></div>
+      <img class="app-icon reveal d1" src="icon.png" alt="Trigger Keeper app icon" width="132" height="132">
       <h1 class="wordmark display reveal d2">Trigger Keeper</h1>
       <p class="tagline reveal d3">Hands-free group photos. Pick a word, prop your phone, walk into frame — say the word and the camera fires.</p>
       <div class="pills reveal d4">
