@@ -11,7 +11,7 @@
     src: url("motter-tektura.ttf") format("truetype");
     font-display: swap;
   }
-
+ 
   :root {
     --teal:  #1FAFA8;
     --pink:  #E5469B;
@@ -21,11 +21,11 @@
     --ink:   #0B0B0B;
     --outline: 3px;
   }
-
+ 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
+ 
   html { scroll-behavior: smooth; }
-
+ 
   body {
     background: var(--teal);
     color: var(--ink);
@@ -34,13 +34,13 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
   }
-
+ 
   .display {
     font-family: "Motter Tektura", "Trebuchet MS", sans-serif;
     font-weight: 400;
     letter-spacing: 0.02em;
   }
-
+ 
   /* ---- Decorative checker stripe ---- */
   .checker {
     height: 26px;
@@ -56,7 +56,7 @@
     border-top: var(--outline) solid var(--ink);
     border-bottom: var(--outline) solid var(--ink);
   }
-
+ 
   /* ---- Scattered triangles ---- */
   .tri {
     position: absolute;
@@ -68,7 +68,7 @@
     z-index: 0;
     pointer-events: none;
   }
-
+ 
   /* ---- Layout shell ---- */
   .wrap {
     max-width: 940px;
@@ -77,60 +77,27 @@
     position: relative;
     z-index: 1;
   }
-
+ 
   /* ---- Hero ---- */
   header.hero {
     text-align: center;
     padding: 64px 0 48px;
     position: relative;
   }
-
-  .icon-badge {
+ 
+  /* Real app icon. The source PNG is square (iOS applies its own mask on
+     device), so the web rounds it here: 30px on 132px approximates the
+     iOS squircle and matches the original badge geometry. */
+  .app-icon {
+    display: block;
     width: 132px; height: 132px;
     margin: 0 auto 28px;
     border-radius: 30px;
-    background: var(--cream);
     border: var(--outline) solid var(--ink);
     box-shadow: 7px 7px 0 var(--ink);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-  /* CSS-drawn placeholder mark: a checker corner + a coral shutter dot.
-     Swap this whole .icon-badge block for <img src="icon.png"> once the
-     real app icon exists. */
-  .icon-badge::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(45deg, var(--ink) 25%, transparent 25%),
-      linear-gradient(-45deg, var(--ink) 25%, transparent 25%),
-      linear-gradient(45deg, transparent 75%, var(--ink) 75%),
-      linear-gradient(-45deg, transparent 75%, var(--ink) 75%);
-    background-size: 22px 22px;
-    background-position: 0 0, 0 11px, 11px -11px, -11px 0;
-    opacity: 0.18;
-  }
-  .icon-badge .dot {
-    width: 58px; height: 58px;
-    border-radius: 50%;
-    background: var(--coral);
-    border: var(--outline) solid var(--ink);
-    position: relative;
-    z-index: 1;
-  }
-  .icon-badge .dot::after {
-    content: "";
-    position: absolute;
-    inset: 12px;
-    border-radius: 50%;
     background: var(--cream);
-    border: 2px solid var(--ink);
   }
-
+ 
   h1.wordmark {
     font-size: clamp(44px, 9vw, 78px);
     color: var(--cream);
@@ -142,7 +109,7 @@
     line-height: 1.05;
     margin-bottom: 16px;
   }
-
+ 
   .tagline {
     font-size: clamp(17px, 2.6vw, 22px);
     color: var(--ink);
@@ -150,7 +117,7 @@
     max-width: 30ch;
     margin: 0 auto 30px;
   }
-
+ 
   /* ---- Badge pills ---- */
   .pills {
     display: flex;
@@ -169,10 +136,10 @@
   }
   .pill:nth-child(2){ background: var(--pink); color: var(--cream); }
   .pill:nth-child(3){ background: var(--cream); }
-
+ 
   /* ---- Section scaffolding ---- */
   section { padding: 52px 0; position: relative; }
-
+ 
   .section-title {
     font-size: clamp(26px, 5vw, 38px);
     color: var(--cream);
@@ -180,7 +147,7 @@
     margin-bottom: 28px;
     text-align: center;
   }
-
+ 
   /* ---- Features grid ---- */
   .grid {
     display: grid;
@@ -216,7 +183,7 @@
   .card:nth-child(3n) .tag { background: var(--coral); }
   .card h3 { font-size: 18px; margin-bottom: 6px; }
   .card p { font-size: 15px; }
-
+ 
   /* ---- Support ---- */
   .support {
     text-align: center;
@@ -234,7 +201,7 @@
     box-shadow: 4px 4px 0 var(--ink);
   }
   .support a.mail:hover { transform: translate(-1px,-1px); }
-
+ 
   /* ---- Privacy policy ---- */
   .policy {
     background: var(--cream);
@@ -270,7 +237,7 @@
     font-weight: 700;
     margin: 14px 0 8px;
   }
-
+ 
   /* ---- Footer ---- */
   footer {
     text-align: center;
@@ -280,7 +247,7 @@
     font-weight: 700;
   }
   footer a { color: var(--cream); }
-
+ 
   /* ---- Load-in animation ---- */
   .reveal {
     opacity: 0;
@@ -292,7 +259,7 @@
   .d2 { animation-delay: .15s; }
   .d3 { animation-delay: .25s; }
   .d4 { animation-delay: .35s; }
-
+ 
   @media (prefers-reduced-motion: reduce) {
     .reveal { animation: none; opacity: 1; transform: none; }
     html { scroll-behavior: auto; }
@@ -300,16 +267,16 @@
 </style>
 </head>
 <body>
-
+ 
   <!-- scattered decorative triangles -->
   <div class="tri" style="top:120px; left:6%; transform:rotate(18deg); border-bottom-color:var(--yellow);"></div>
   <div class="tri" style="top:210px; right:8%; transform:rotate(-32deg); border-bottom-color:var(--pink);"></div>
   <div class="tri" style="top:60px;  right:18%; transform:rotate(54deg); border-bottom-color:var(--coral);"></div>
   <div class="tri" style="top:340px; left:14%; transform:rotate(-12deg); border-bottom-color:var(--coral);"></div>
-
+ 
   <header class="hero">
     <div class="wrap">
-      <div class="icon-badge reveal d1"><span class="dot"></span></div>
+      <img class="app-icon reveal d1" src="icon.png" alt="Trigger Keeper app icon" width="132" height="132">
       <h1 class="wordmark display reveal d2">Trigger Keeper</h1>
       <p class="tagline reveal d3">Hands-free group photos. Pick a word, prop your phone, walk into frame — say the word and the camera fires.</p>
       <div class="pills reveal d4">
@@ -319,9 +286,9 @@
       </div>
     </div>
   </header>
-
+ 
   <div class="checker"></div>
-
+ 
   <section>
     <div class="wrap">
       <h2 class="section-title display">What it does</h2>
@@ -359,9 +326,9 @@
       </div>
     </div>
   </section>
-
+ 
   <div class="checker"></div>
-
+ 
   <section class="support">
     <div class="wrap">
       <h2 class="section-title display">Support</h2>
@@ -369,19 +336,19 @@
       <a class="mail" href="mailto:copycopyapp@gmail.com">copycopyapp@gmail.com</a>
     </div>
   </section>
-
+ 
   <div class="checker"></div>
-
+ 
   <section id="privacy">
     <div class="wrap">
       <div class="policy">
         <h2 class="display">Privacy Policy</h2>
         <p class="updated">Last updated: May 2026</p>
-
+ 
         <p>Trigger Keeper is a hands-free camera app for iPhone. You choose a trigger word, prop your phone up, and the camera takes a photo whenever someone says the word. This policy explains exactly what the app does with your camera, microphone, voice, and photos.</p>
-
+ 
         <p class="lede">The short version: everything happens on your device. Trigger Keeper has no servers, no accounts, and no analytics. The developer cannot see your photos, hear your audio, or access any of your data.</p>
-
+ 
         <h3>Microphone and Speech Recognition</h3>
         <p>To listen for your trigger word, Trigger Keeper uses your microphone together with Apple's on-device speech recognition.</p>
         <ul>
@@ -389,7 +356,7 @@
           <li>Audio is used only, and in the moment, to detect your trigger word. It is never recorded, saved, or stored.</li>
           <li>The microphone is active only while a listening session is running — after you tap the play button, and until you stop, the session times out, or you leave the app. Trigger Keeper does not listen in the background.</li>
         </ul>
-
+ 
         <h3>Camera and Photos</h3>
         <ul>
           <li>The camera is used to show the viewfinder and to take photos. The camera feed is never recorded as video or streamed anywhere.</li>
@@ -397,31 +364,31 @@
           <li>Captured photos are saved to your device's Photos library and to a dedicated album named "Trigger Keeper." These photos live in your Photos library, under your control. Because they are saved to Photos rather than inside the app, <strong>deleting Trigger Keeper does not delete the photos it has already saved</strong> — you manage them in the Photos app like any other photo.</li>
           <li>Photo-library access is used only to save the photos Trigger Keeper captures and to maintain its album. The app does not read, browse, or upload your other photos.</li>
         </ul>
-
+ 
         <h3>No Data Collection</h3>
         <p>Trigger Keeper does not collect, access, or receive any of your data. There are no servers, no accounts, and no cloud sync. The developer has no visibility into how you use the app, what your trigger word is, or what photos you take.</p>
-
+ 
         <h3>Your Settings</h3>
         <p>Your preferences — your trigger word, recent trigger words, capture mode, and flash setting — are stored locally on your device. They never leave it. Uninstalling the app removes these settings.</p>
-
+ 
         <h3>No Analytics or Tracking</h3>
         <p>Trigger Keeper contains no analytics, tracking, advertising, or crash-reporting code.</p>
-
+ 
         <h3>Permissions, and Changing Your Mind</h3>
         <p>Trigger Keeper asks for camera, microphone, speech recognition, and photo-library access so it can do what it does. You can grant or revoke any of these at any time in the iOS Settings app, under Trigger Keeper. If you revoke a permission, the related feature stops working until you grant it again; the app will point you to Settings when this happens.</p>
-
+ 
         <h3>Children's Privacy</h3>
         <p>Trigger Keeper does not collect any personal information from anyone, including children.</p>
-
+ 
         <h3>Changes to This Policy</h3>
         <p>If this policy changes, the updated version will be posted here with a new "Last updated" date.</p>
-
+ 
         <h3>Contact</h3>
         <p>Questions, feedback, or issues? Reach out anytime at <a href="mailto:copycopyapp@gmail.com">copycopyapp@gmail.com</a>.</p>
       </div>
     </div>
   </section>
-
+ 
   <footer>
     <div class="wrap">
       © 2026 Trigger Keeper &nbsp;·&nbsp;
@@ -429,6 +396,7 @@
       <a href="mailto:copycopyapp@gmail.com">Contact</a>
     </div>
   </footer>
-
+ 
 </body>
 </html>
+ 
