@@ -3,8 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TimerTalk — Reminders in Your Own Voice for iPhone</title>
-<meta name="description" content="Speak a reminder in your own voice and TimerTalk plays it back when time's up. Timers, specific-time alarms, recurring alarms, and pre-alarm warnings — understood with on-device AI. No accounts, no tracking.">
+<title>TimerTalk: Reminders in Your Own Voice for iPhone</title>
+<meta name="description" content="Speak a reminder in your own voice and TimerTalk plays it back when time's up. Timers, specific-time alarms, recurring alarms, and pre-alarm warnings, all understood with on-device AI. No accounts, no tracking.">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -52,7 +54,7 @@
   .nav-in{display:flex;align-items:center;justify-content:space-between;height:66px}
   .brand{display:flex;align-items:center;gap:11px;font-family:var(--display);
     font-weight:700;font-size:1.12rem;letter-spacing:-.02em;text-decoration:none}
-  .brand .mark{width:30px;height:30px;border-radius:9px;flex:none}
+  .brand .mark{width:30px;height:30px;border-radius:9px;flex:none;object-fit:cover}
   .nav-links{display:flex;align-items:center;gap:26px}
   .nav-links a{font-size:.92rem;font-weight:500;color:var(--ink-soft);text-decoration:none;transition:color .2s}
   .nav-links a:hover{color:var(--ink)}
@@ -224,28 +226,9 @@
 </head>
 <body>
  
-<!-- app mark, reused -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <linearGradient id="mk" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#6E54FF"/><stop offset="1" stop-color="#4631B8"/>
-    </linearGradient>
-  </defs>
-  <symbol id="appmark" viewBox="0 0 64 64">
-    <rect width="64" height="64" rx="15" fill="url(#mk)"/>
-    <path d="M20 22h24a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H30l-8 7v-7a4 4 0 0 1-4-4V26a4 4 0 0 1 2-3.46Z" fill="#fff" opacity=".96"/>
-    <g stroke="#5B43F0" stroke-width="2.4" stroke-linecap="round">
-      <line x1="27" y1="28" x2="27" y2="36"/>
-      <line x1="32" y1="25" x2="32" y2="39"/>
-      <line x1="37" y1="29" x2="37" y2="35"/>
-    </g>
-    <circle cx="37" cy="29.5" r="0" fill="#FF7A45"/>
-  </symbol>
-</svg>
- 
 <nav>
   <div class="wrap nav-in">
-    <a class="brand" href="#top"><svg class="mark"><use href="#appmark"/></svg>TimerTalk</a>
+    <a class="brand" href="#top"><img class="mark" src="icon.png" alt="">TimerTalk</a>
     <div class="nav-links">
       <a href="#features" class="hidesm">Features</a>
       <a href="#privacy">Privacy</a>
@@ -262,7 +245,7 @@
       <span class="eyebrow">No tracking</span>
     </div>
     <h1>Reminders in your <span class="v">own voice</span>.</h1>
-    <p class="lede">Say what you need and when. TimerTalk sets the alarm — and when it's time, it plays your own message back to you.</p>
+    <p class="lede">Say what you need and when. TimerTalk sets the alarm, then plays your message back when it's time.</p>
     <div class="hero-cta" id="get">
       <a class="btn" href="#" aria-label="Download TimerTalk on the App Store">Download on the App Store</a>
       <a class="btn ghost" href="#features">See how it works</a>
@@ -295,7 +278,7 @@
     <div class="reveal">
       <span class="eyebrow">When it's time</span>
       <h2>Your reminder, in your voice.</h2>
-      <p>No generic chime. The alarm rings the way you said it, right on the lock screen — so a glance and a listen tell you exactly what it's for.</p>
+      <p>No generic chime. The alarm rings the way you said it, right on the lock screen, so a glance and a listen tell you what it's for.</p>
     </div>
     <div class="phone reveal" aria-label="An iPhone lock screen showing a TimerTalk alarm" role="img">
       <div class="lockpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
@@ -315,19 +298,19 @@
     <div class="sec-head reveal">
       <span class="eyebrow">What it does</span>
       <h2>Talk to it like a person.</h2>
-      <p>Speak naturally — durations, clock times, repeats, and warnings all land as the right alarm. No commands to memorize.</p>
+      <p>Speak naturally. Durations, clock times, repeats, and warnings all land as the right alarm. No commands to memorize.</p>
     </div>
     <div class="grid">
       <article class="card reveal">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4"/></svg></div>
         <h3>Say it, get it back</h3>
-        <p>Record a reminder in your own voice. When the timer's up, the alarm plays your message — not a generic beep.</p>
+        <p>Record a reminder in your own voice. When the timer's up, the alarm plays your message, not a generic beep.</p>
         <div class="ex">Take the bread out in 40 minutes</div>
       </article>
       <article class="card reveal">
         <div class="ico warm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
         <h3>Timers and alarms</h3>
-        <p>“In ten minutes” or “at 3:30” — TimerTalk understands both, and figures out which you meant.</p>
+        <p>“In ten minutes” or “at 3:30.” TimerTalk understands both and figures out which you meant.</p>
         <div class="ex">Turn off the oven at 3:30</div>
       </article>
       <article class="card reveal">
@@ -345,7 +328,7 @@
       <article class="card reveal">
         <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M6 6l1.5 1.5M16.5 16.5 18 18M18 6l-1.5 1.5M7.5 16.5 6 18"/><circle cx="12" cy="12" r="4"/></svg></div>
         <h3>Understands how you talk</h3>
-        <p>On-device AI reads your phrasing and pulls out the reminder, the time, and the warning — however you say it.</p>
+        <p>On-device AI reads your phrasing and pulls out the reminder, the time, and the warning, however you say it.</p>
         <div class="ex">Remind me to call mom in an hour and a half</div>
       </article>
       <article class="card reveal">
@@ -362,7 +345,7 @@
   <div class="wrap">
     <div class="support-box reveal">
       <h2>Questions or ideas?</h2>
-      <p>Feedback, bugs, or just want to say hello — the developer reads every message.</p>
+      <p>Feedback, bugs, or just to say hello. The developer reads every message.</p>
       <a class="mail" href="mailto:copycopyapp@gmail.com">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
         copycopyapp@gmail.com
@@ -380,13 +363,13 @@
     </div>
     <div class="prose reveal">
       <p>TimerTalk lets you set reminders by speaking them, and plays your recording back when the alarm fires. This explains exactly what the app does with your microphone, your voice, and your reminders.</p>
-      <p class="tldr"><strong>The short version:</strong> everything happens on your device. TimerTalk has no servers, no accounts, and no analytics. The developer cannot hear your recordings, read your reminders, or access any of your data. The one thing TimerTalk keeps is your voice recordings — saved on your device as the sound your alarms play — and those never leave it.</p>
+      <p class="tldr"><strong>The short version:</strong> everything happens on your device. TimerTalk has no servers, no accounts, and no analytics. The developer cannot hear your recordings, read your reminders, or access any of your data. The one thing TimerTalk keeps is your voice recordings. They live on your device as the sound your alarms play, and they never leave it.</p>
  
       <h3>Microphone, recording, and speech recognition</h3>
       <p>TimerTalk uses your microphone when you record a reminder.</p>
       <ul>
         <li>Your recording is saved <strong>on your device</strong> and used as the sound the alarm plays back. It is stored locally within the app and is never uploaded.</li>
-        <li>To understand what you said — the reminder and the timing — TimerTalk transcribes your recording. It requests Apple's <strong>on-device</strong> speech recognition and uses it whenever your device supports it for your language, so the audio stays on your device.</li>
+        <li>TimerTalk transcribes your recording to pull out the reminder and the timing. It requests Apple's <strong>on-device</strong> speech recognition and uses it whenever your device supports it for your language, so the audio stays on your device.</li>
         <li>On devices or languages where on-device recognition isn't available, transcription is handled by Apple's speech-recognition service, under Apple's privacy policy. (TimerTalk currently supports English.)</li>
         <li>The microphone is active only while you are recording a reminder. TimerTalk does not listen in the background.</li>
       </ul>
@@ -394,7 +377,7 @@
       <h3>Understanding what you say (on-device AI)</h3>
       <p>To turn something like “every weekday at 7, take your vitamins” into the right alarm, TimerTalk interprets the transcribed text.</p>
       <ul>
-        <li>When available, this runs on Apple's on-device Foundation Models (Apple Intelligence) — entirely on your device, with nothing sent to the developer or any third party.</li>
+        <li>When available, this runs on Apple's on-device Foundation Models (Apple Intelligence). It all happens on your device, with nothing sent to the developer or any third party.</li>
         <li>On devices without it, TimerTalk uses a built-in text parser that also runs entirely on your device.</li>
         <li>Either way, no part of your reminder is sent off your device for interpretation.</li>
       </ul>
@@ -432,7 +415,7 @@
  
 <footer>
   <div class="wrap foot-in">
-    <a class="brand" href="#top"><svg class="mark" style="width:26px;height:26px"><use href="#appmark"/></svg>TimerTalk</a>
+    <a class="brand" href="#top"><img class="mark" src="icon.png" style="width:26px;height:26px" alt="">TimerTalk</a>
     <div class="foot-links">
       <a href="#features">Features</a>
       <a href="#privacy">Privacy</a>
@@ -450,4 +433,3 @@
 </script>
 </body>
 </html>
- 
