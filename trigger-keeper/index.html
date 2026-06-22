@@ -3,433 +3,432 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TimerTalk: Reminders in Your Own Voice for iPhone</title>
-<meta name="description" content="Speak a reminder in your own voice and TimerTalk plays it back when time's up. Timers, specific-time alarms, recurring alarms, and pre-alarm warnings, all understood with on-device AI. No accounts, no tracking.">
-<link rel="icon" type="image/png" href="icon.png">
-<link rel="apple-touch-icon" href="icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Trigger Keeper — Hands-Free Group Photos for iPhone</title>
+<meta name="description" content="A hands-free iPhone camera. Pick a trigger word, prop your phone up, walk into frame. Say the word and the camera fires. On-device, no accounts, no tracking.">
 <style>
-  :root{
-    --ink:#1B1726;
-    --ink-soft:#524C66;
-    --paper:#F7F5FB;
-    --card:#FFFFFF;
-    --voice:#5B43F0;
-    --voice-deep:#4231B8;
-    --alarm:#FF7A45;
-    --wash:#ECE8FC;
-    --wash-warm:#FFEFE6;
-    --line:#E6E2F2;
-    --night:#0B0A11;
-    --display:'Bricolage Grotesque',system-ui,sans-serif;
-    --body:'Inter',system-ui,sans-serif;
-    --mono:'DM Mono',ui-monospace,monospace;
+  @font-face {
+    font-family: "Motter Tektura";
+    src: url("motter-tektura.ttf") format("truetype");
+    font-display: swap;
   }
- 
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{
-    font-family:var(--body);
-    background:var(--paper);
-    color:var(--ink);
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
+
+  :root {
+    --teal:  #1FAFA8;
+    --pink:  #E5469B;
+    --yellow:#FFC93C;
+    --coral: #FF6B47;
+    --cream: #FFF8E7;
+    --ink:   #0B0B0B;
+    --outline: 3px;
   }
-  a{color:inherit}
-  .wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 24px}
- 
-  /* ---- type ---- */
-  h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.04;letter-spacing:-.02em}
-  .eyebrow{
-    font-family:var(--mono);font-size:.72rem;font-weight:500;
-    letter-spacing:.16em;text-transform:uppercase;color:var(--voice);
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--teal);
+    color: var(--ink);
+    font-family: "Trebuchet MS", "Avenir Next", "Segoe UI", sans-serif;
+    line-height: 1.55;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
- 
-  /* ---- nav ---- */
-  nav{position:sticky;top:0;z-index:50;background:rgba(247,245,251,.82);
-    backdrop-filter:saturate(140%) blur(14px);border-bottom:1px solid var(--line)}
-  .nav-in{display:flex;align-items:center;justify-content:space-between;height:66px}
-  .brand{display:flex;align-items:center;gap:11px;font-family:var(--display);
-    font-weight:700;font-size:1.12rem;letter-spacing:-.02em;text-decoration:none}
-  .brand .mark{width:30px;height:30px;border-radius:9px;flex:none;object-fit:cover}
-  .nav-links{display:flex;align-items:center;gap:26px}
-  .nav-links a{font-size:.92rem;font-weight:500;color:var(--ink-soft);text-decoration:none;transition:color .2s}
-  .nav-links a:hover{color:var(--ink)}
-  .btn{
-    display:inline-flex;align-items:center;gap:8px;
-    background:var(--voice);color:#fff;font-weight:600;font-size:.92rem;
-    padding:10px 18px;border-radius:999px;text-decoration:none;
-    box-shadow:0 6px 18px -6px rgba(91,67,240,.5);transition:transform .18s,box-shadow .18s}
-  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px -8px rgba(91,67,240,.6)}
-  .btn.ghost{background:var(--wash);color:var(--voice-deep);box-shadow:none}
-  .btn.ghost:hover{background:#e2dcfb}
- 
-  /* ---- hero ---- */
-  .hero{padding:84px 0 64px;position:relative}
-  .hero::before{content:"";position:absolute;inset:0;z-index:-1;
-    background:
-      radial-gradient(60% 50% at 78% 8%,rgba(255,122,69,.13),transparent 70%),
-      radial-gradient(70% 60% at 8% 22%,rgba(91,67,240,.14),transparent 70%)}
-  .hero h1{font-size:clamp(2.6rem,7vw,4.7rem);max-width:13ch}
-  .hero h1 .v{color:var(--voice);position:relative;white-space:nowrap}
-  .hero p.lede{font-size:clamp(1.05rem,2.2vw,1.32rem);color:var(--ink-soft);
-    max-width:46ch;margin:22px 0 32px}
-  .hero-cta{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
-  .hero-eyebrow{display:inline-flex;gap:14px;align-items:center;margin-bottom:22px;flex-wrap:wrap}
-  .dotsep{width:4px;height:4px;border-radius:50%;background:var(--alarm)}
- 
-  /* signature: captured phrase -> alarm */
-  .capture{
-    margin-top:54px;background:var(--card);border:1px solid var(--line);
-    border-radius:22px;padding:26px 28px;
-    box-shadow:0 30px 60px -34px rgba(27,23,38,.32);
-    display:grid;grid-template-columns:1fr auto 1fr;gap:26px;align-items:center}
-  .said{display:flex;flex-direction:column;gap:14px}
-  .said .lab{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--ink-soft)}
-  .said .phrase{font-family:var(--mono);font-size:1.02rem;color:var(--ink);line-height:1.5}
-  .said .phrase .q{color:var(--voice)}
-  .wave{display:flex;align-items:center;gap:4px;height:34px;margin-top:2px}
-  .wave span{width:4px;border-radius:3px;background:var(--voice);
-    animation:talk 1.25s ease-in-out infinite}
-  .wave span:nth-child(1){height:30%;animation-delay:0s}
-  .wave span:nth-child(2){height:70%;animation-delay:.08s}
-  .wave span:nth-child(3){height:48%;animation-delay:.16s}
-  .wave span:nth-child(4){height:96%;animation-delay:.24s;background:var(--alarm)}
-  .wave span:nth-child(5){height:60%;animation-delay:.32s}
-  .wave span:nth-child(6){height:84%;animation-delay:.4s}
-  .wave span:nth-child(7){height:38%;animation-delay:.48s}
-  .wave span:nth-child(8){height:66%;animation-delay:.56s}
-  .wave span:nth-child(9){height:26%;animation-delay:.64s}
-  @keyframes talk{0%,100%{transform:scaleY(.55)}50%{transform:scaleY(1)}}
-  .arrow{display:flex;align-items:center;justify-content:center;color:var(--ink-soft)}
-  .arrow svg{width:34px;height:34px}
-  .made{display:flex;flex-direction:column;gap:14px}
-  .made .lab{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--ink-soft)}
-  .alarm-chip{display:flex;align-items:center;gap:13px;background:var(--wash-warm);
-    border:1px solid #ffd9c4;border-radius:15px;padding:13px 15px}
-  .alarm-chip .ring{width:38px;height:38px;border-radius:11px;background:var(--alarm);
-    display:flex;align-items:center;justify-content:center;flex:none}
-  .alarm-chip .ring svg{width:21px;height:21px;color:#fff}
-  .alarm-chip .meta b{font-family:var(--display);font-weight:700;display:block;font-size:1rem}
-  .alarm-chip .meta span{font-size:.82rem;color:var(--ink-soft)}
- 
-  /* ---- the moment (dark) ---- */
-  .moment{background:var(--night);color:#fff;padding:96px 0;margin-top:90px}
-  .moment-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-  .moment .eyebrow{color:var(--alarm)}
-  .moment h2{font-size:clamp(2rem,4.2vw,3rem);margin:14px 0 18px;color:#fff;max-width:14ch}
-  .moment p{color:#b3aec4;font-size:1.1rem;max-width:42ch}
-  .phone{justify-self:center;width:300px;max-width:88vw;aspect-ratio:9/19.2;
-    background:#000;border-radius:44px;border:1px solid #23202e;
-    box-shadow:0 50px 90px -40px rgba(0,0,0,.9),inset 0 0 0 7px #0e0d14;
-    padding:30px 26px;display:flex;flex-direction:column;position:relative;overflow:hidden}
-  .lockpill{align-self:center;width:118px;height:32px;border-radius:999px;border:1px solid #2c2935;
-    display:flex;align-items:center;justify-content:center;margin-bottom:54px}
-  .lockpill svg{width:13px;height:13px;color:#8c8798}
-  .alarm-head{display:flex;gap:9px;align-items:flex-start;color:#cfcad9;font-size:.92rem;line-height:1.3}
-  .alarm-head svg{width:18px;height:18px;flex:none;margin-top:1px;color:#8c8798}
-  .bigtime{font-family:var(--display);font-weight:800;font-size:4.8rem;letter-spacing:-.03em;
-    margin:auto 0 8px;text-align:center;color:#fff}
-  .appname{text-align:center;color:#7e7990;font-size:.95rem;margin-bottom:auto}
-  .slide{margin-top:24px;height:58px;border-radius:999px;background:#16151c;
-    display:flex;align-items:center;padding:6px;gap:14px}
-  .slide .knob{width:46px;height:46px;border-radius:14px;background:#fff;flex:none}
-  .slide span{color:#6f6a7d;font-weight:500}
- 
-  /* ---- features ---- */
-  .features{padding:96px 0 40px}
-  .sec-head{max-width:38ch;margin-bottom:46px}
-  .sec-head h2{font-size:clamp(1.9rem,4vw,2.8rem)}
-  .sec-head p{color:var(--ink-soft);font-size:1.08rem;margin-top:14px}
-  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;
-    padding:26px 24px 24px;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
-  .card:hover{transform:translateY(-4px);box-shadow:0 26px 50px -32px rgba(27,23,38,.4)}
-  .ico{width:46px;height:46px;border-radius:13px;background:var(--wash);
-    display:flex;align-items:center;justify-content:center;margin-bottom:18px}
-  .ico svg{width:24px;height:24px;color:var(--voice)}
-  .ico.warm{background:var(--wash-warm)}
-  .ico.warm svg{color:var(--alarm)}
-  .card h3{font-size:1.18rem;margin-bottom:8px}
-  .card p{color:var(--ink-soft);font-size:.96rem}
-  .card .ex{margin-top:auto;padding-top:18px;font-family:var(--mono);font-size:.82rem;
-    color:var(--voice-deep);line-height:1.5}
-  .card .ex::before{content:"“";color:var(--alarm)}
-  .card .ex::after{content:"”";color:var(--alarm)}
- 
-  /* ---- support ---- */
-  .support{padding:60px 0 0}
-  .support-box{background:linear-gradient(120deg,var(--voice),#7a5cff);
-    color:#fff;border-radius:26px;padding:52px 44px;text-align:center;
-    box-shadow:0 40px 70px -40px rgba(91,67,240,.7)}
-  .support-box h2{font-size:clamp(1.7rem,3.6vw,2.4rem);color:#fff}
-  .support-box p{color:#e4ddff;margin:12px auto 24px;max-width:40ch}
-  .support-box a.mail{display:inline-flex;align-items:center;gap:9px;background:#fff;color:var(--voice-deep);
-    font-weight:600;padding:13px 24px;border-radius:999px;text-decoration:none;transition:transform .18s}
-  .support-box a.mail:hover{transform:translateY(-2px)}
- 
-  /* ---- privacy ---- */
-  .privacy{padding:92px 0 40px}
-  .privacy .sec-head{margin-bottom:30px}
-  .updated{font-family:var(--mono);font-size:.78rem;color:var(--ink-soft);letter-spacing:.04em}
-  .prose{max-width:68ch}
-  .prose>p{margin:0 0 18px;color:#3a3548}
-  .prose .tldr{background:var(--wash);border-left:3px solid var(--voice);
-    border-radius:0 14px 14px 0;padding:18px 22px;color:var(--ink);font-size:1rem}
-  .prose h3{font-size:1.18rem;margin:34px 0 10px}
-  .prose ul{margin:0 0 18px;padding-left:20px;color:#3a3548}
-  .prose li{margin-bottom:9px}
-  .prose strong{color:var(--ink);font-weight:600}
-  .prose a{color:var(--voice-deep);text-decoration:underline;text-underline-offset:2px}
- 
-  /* ---- footer ---- */
-  footer{border-top:1px solid var(--line);margin-top:80px;padding:40px 0}
-  .foot-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
-  .foot-in .brand{font-size:1rem}
-  .foot-links{display:flex;gap:22px;font-size:.9rem;color:var(--ink-soft)}
-  .foot-links a{text-decoration:none;transition:color .2s}
-  .foot-links a:hover{color:var(--ink)}
-  .copy{font-size:.82rem;color:var(--ink-soft);width:100%;margin-top:8px}
- 
-  /* ---- reveal ---- */
-  .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
-  .reveal.in{opacity:1;transform:none}
- 
-  /* ---- focus ---- */
-  a:focus-visible,.btn:focus-visible{outline:3px solid var(--alarm);outline-offset:3px;border-radius:6px}
- 
-  /* ---- responsive ---- */
-  @media(max-width:860px){
-    .grid{grid-template-columns:1fr 1fr}
-    .moment-grid{grid-template-columns:1fr;gap:44px}
-    .capture{grid-template-columns:1fr;gap:18px;text-align:left}
-    .arrow{transform:rotate(90deg)}
+
+  .display {
+    font-family: "Motter Tektura", "Trebuchet MS", sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.02em;
   }
-  @media(max-width:560px){
-    .grid{grid-template-columns:1fr}
-    .nav-links a.hidesm{display:none}
-    .hero{padding:60px 0 48px}
-    .support-box{padding:40px 26px}
+
+  /* ---- Decorative checker stripe ---- */
+  .checker {
+    height: 26px;
+    width: 100%;
+    background-image:
+      linear-gradient(45deg, var(--ink) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--ink) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--ink) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--ink) 75%);
+    background-size: 26px 26px;
+    background-position: 0 0, 0 13px, 13px -13px, -13px 0;
+    background-color: var(--cream);
+    border-top: var(--outline) solid var(--ink);
+    border-bottom: var(--outline) solid var(--ink);
   }
-  @media(prefers-reduced-motion:reduce){
-    *{scroll-behavior:auto}
-    .wave span{animation:none}
-    .reveal{transition:none;opacity:1;transform:none}
-    .btn:hover,.card:hover{transform:none}
+
+  /* ---- Scattered triangles ---- */
+  .tri {
+    position: absolute;
+    width: 0; height: 0;
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-bottom: 19px solid var(--coral);
+    filter: drop-shadow(2px 2px 0 var(--ink));
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* ---- Layout shell ---- */
+  .wrap {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 0 22px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ---- Hero ---- */
+  header.hero {
+    text-align: center;
+    padding: 64px 0 48px;
+    position: relative;
+  }
+
+  .icon-badge {
+    width: 132px; height: 132px;
+    margin: 0 auto 28px;
+    border-radius: 30px;
+    background: var(--cream);
+    border: var(--outline) solid var(--ink);
+    box-shadow: 7px 7px 0 var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  /* CSS-drawn placeholder mark: a checker corner + a coral shutter dot.
+     Swap this whole .icon-badge block for <img src="icon.png"> once the
+     real app icon exists. */
+  .icon-badge::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(45deg, var(--ink) 25%, transparent 25%),
+      linear-gradient(-45deg, var(--ink) 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, var(--ink) 75%),
+      linear-gradient(-45deg, transparent 75%, var(--ink) 75%);
+    background-size: 22px 22px;
+    background-position: 0 0, 0 11px, 11px -11px, -11px 0;
+    opacity: 0.18;
+  }
+  .icon-badge .dot {
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    background: var(--coral);
+    border: var(--outline) solid var(--ink);
+    position: relative;
+    z-index: 1;
+  }
+  .icon-badge .dot::after {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    background: var(--cream);
+    border: 2px solid var(--ink);
+  }
+
+  h1.wordmark {
+    font-size: clamp(44px, 9vw, 78px);
+    color: var(--cream);
+    text-shadow:
+      3px 3px 0 var(--ink),
+      -1px -1px 0 var(--ink),
+       1px -1px 0 var(--ink),
+      -1px  1px 0 var(--ink);
+    line-height: 1.05;
+    margin-bottom: 16px;
+  }
+
+  .tagline {
+    font-size: clamp(17px, 2.6vw, 22px);
+    color: var(--ink);
+    font-weight: 700;
+    max-width: 30ch;
+    margin: 0 auto 30px;
+  }
+
+  /* ---- Badge pills ---- */
+  .pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+  .pill {
+    background: var(--yellow);
+    border: var(--outline) solid var(--ink);
+    border-radius: 999px;
+    padding: 9px 18px;
+    font-weight: 800;
+    font-size: 14px;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+  .pill:nth-child(2){ background: var(--pink); color: var(--cream); }
+  .pill:nth-child(3){ background: var(--cream); }
+
+  /* ---- Section scaffolding ---- */
+  section { padding: 52px 0; position: relative; }
+
+  .section-title {
+    font-size: clamp(26px, 5vw, 38px);
+    color: var(--cream);
+    text-shadow: 2px 2px 0 var(--ink);
+    margin-bottom: 28px;
+    text-align: center;
+  }
+
+  /* ---- Features grid ---- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(248px, 1fr));
+    gap: 18px;
+  }
+  .card {
+    background: var(--cream);
+    border: var(--outline) solid var(--ink);
+    border-radius: 16px;
+    padding: 22px 20px;
+    box-shadow: 5px 5px 0 var(--ink);
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover {
+    transform: translate(-2px,-2px);
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+  .card .tag {
+    display: inline-block;
+    font-family: "Motter Tektura", sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: lowercase;
+    background: var(--teal);
+    color: var(--cream);
+    border: 2px solid var(--ink);
+    border-radius: 999px;
+    padding: 3px 11px;
+    margin-bottom: 12px;
+  }
+  .card:nth-child(2n) .tag { background: var(--pink); }
+  .card:nth-child(3n) .tag { background: var(--coral); }
+  .card h3 { font-size: 18px; margin-bottom: 6px; }
+  .card p { font-size: 15px; }
+
+  /* ---- Support ---- */
+  .support {
+    text-align: center;
+  }
+  .support a.mail {
+    display: inline-block;
+    margin-top: 8px;
+    background: var(--cream);
+    border: var(--outline) solid var(--ink);
+    border-radius: 999px;
+    padding: 11px 22px;
+    font-weight: 800;
+    color: var(--ink);
+    text-decoration: none;
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+  .support a.mail:hover { transform: translate(-1px,-1px); }
+
+  /* ---- Privacy policy ---- */
+  .policy {
+    background: var(--cream);
+    border: var(--outline) solid var(--ink);
+    border-radius: 18px;
+    box-shadow: 6px 6px 0 var(--ink);
+    padding: 32px 28px;
+  }
+  .policy h2 {
+    font-size: 28px;
+    margin-bottom: 4px;
+  }
+  .policy .updated {
+    font-size: 13px;
+    font-weight: 700;
+    opacity: 0.7;
+    margin-bottom: 20px;
+  }
+  .policy h3 {
+    font-size: 18px;
+    margin: 22px 0 7px;
+    color: var(--ink);
+  }
+  .policy p { font-size: 15px; margin-bottom: 10px; }
+  .policy ul { margin: 0 0 12px 20px; }
+  .policy li { font-size: 15px; margin-bottom: 7px; }
+  .policy strong { font-weight: 800; }
+  .policy .lede {
+    background: var(--yellow);
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-weight: 700;
+    margin: 14px 0 8px;
+  }
+
+  /* ---- Footer ---- */
+  footer {
+    text-align: center;
+    padding: 36px 0 56px;
+    color: var(--cream);
+    font-size: 14px;
+    font-weight: 700;
+  }
+  footer a { color: var(--cream); }
+
+  /* ---- Load-in animation ---- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    animation: rise .6s ease forwards;
+  }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+  .d1 { animation-delay: .05s; }
+  .d2 { animation-delay: .15s; }
+  .d3 { animation-delay: .25s; }
+  .d4 { animation-delay: .35s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { animation: none; opacity: 1; transform: none; }
+    html { scroll-behavior: auto; }
   }
 </style>
 </head>
 <body>
- 
-<nav>
-  <div class="wrap nav-in">
-    <a class="brand" href="#top"><img class="mark" src="icon.png" alt="">TimerTalk</a>
-    <div class="nav-links">
-      <a href="#features" class="hidesm">Features</a>
-      <a href="#privacy">Privacy</a>
-      <a class="btn" href="#get">Get TimerTalk</a>
+
+  <!-- scattered decorative triangles -->
+  <div class="tri" style="top:120px; left:6%; transform:rotate(18deg); border-bottom-color:var(--yellow);"></div>
+  <div class="tri" style="top:210px; right:8%; transform:rotate(-32deg); border-bottom-color:var(--pink);"></div>
+  <div class="tri" style="top:60px;  right:18%; transform:rotate(54deg); border-bottom-color:var(--coral);"></div>
+  <div class="tri" style="top:340px; left:14%; transform:rotate(-12deg); border-bottom-color:var(--coral);"></div>
+
+  <header class="hero">
+    <div class="wrap">
+      <div class="icon-badge reveal d1"><span class="dot"></span></div>
+      <h1 class="wordmark display reveal d2">Trigger Keeper</h1>
+      <p class="tagline reveal d3">Hands-free group photos. Pick a word, prop your phone, walk into frame — say the word and the camera fires.</p>
+      <div class="pills reveal d4">
+        <span class="pill">On-device</span>
+        <span class="pill">No accounts</span>
+        <span class="pill">No tracking</span>
+      </div>
     </div>
-  </div>
-</nav>
- 
-<header class="hero" id="top">
-  <div class="wrap">
-    <div class="hero-eyebrow">
-      <span class="eyebrow">On-device</span><span class="dotsep"></span>
-      <span class="eyebrow">No accounts</span><span class="dotsep"></span>
-      <span class="eyebrow">No tracking</span>
-    </div>
-    <h1>Reminders in your <span class="v">own voice</span>.</h1>
-    <p class="lede">Say what you need and when. TimerTalk sets the alarm, then plays your message back when it's time.</p>
-    <div class="hero-cta" id="get">
-      <a class="btn" href="#" aria-label="Download TimerTalk on the App Store">Download on the App Store</a>
-      <a class="btn ghost" href="#features">See how it works</a>
-    </div>
- 
-    <div class="capture reveal">
-      <div class="said">
-        <div class="lab">You say</div>
-        <div class="phrase"><span class="q">“</span>Pull the cake out in 30 minutes<span class="q">”</span></div>
-        <div class="wave" aria-hidden="true">
-          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </header>
+
+  <div class="checker"></div>
+
+  <section>
+    <div class="wrap">
+      <h2 class="section-title display">What it does</h2>
+      <div class="grid">
+        <div class="card">
+          <span class="tag">voice</span>
+          <h3>Say the word</h3>
+          <p>Choose any trigger word or phrase. When someone says it, the camera takes the shot — no hands needed.</p>
+        </div>
+        <div class="card">
+          <span class="tag">in frame</span>
+          <h3>Be in the photo</h3>
+          <p>Prop the phone on a tripod or hand it to anyone. Walk in, get everyone together, and trigger it from the group.</p>
+        </div>
+        <div class="card">
+          <span class="tag">burst</span>
+          <h3>Catch the moment</h3>
+          <p>Fire a single shot or a quick burst of three on every trigger, so the blinks and the laughs don't cost you the photo.</p>
+        </div>
+        <div class="card">
+          <span class="tag">private</span>
+          <h3>On-device listening</h3>
+          <p>Speech recognition runs entirely on your iPhone. Audio is never recorded, stored, or sent anywhere.</p>
+        </div>
+        <div class="card">
+          <span class="tag">your word</span>
+          <h3>Make it yours</h3>
+          <p>Change the trigger word anytime. Funny, secret, or simple — it's your game piece.</p>
+        </div>
+        <div class="card">
+          <span class="tag">photos</span>
+          <h3>Saved to your library</h3>
+          <p>Shots land in your Photos library and a dedicated Trigger Keeper album, ready to share.</p>
         </div>
       </div>
-      <div class="arrow" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </div>
+  </section>
+
+  <div class="checker"></div>
+
+  <section class="support">
+    <div class="wrap">
+      <h2 class="section-title display">Support</h2>
+      <p style="color:var(--ink); font-weight:700;">Questions, feedback, or issues? Reach out anytime.</p>
+      <a class="mail" href="mailto:copycopyapp@gmail.com">copycopyapp@gmail.com</a>
+    </div>
+  </section>
+
+  <div class="checker"></div>
+
+  <section id="privacy">
+    <div class="wrap">
+      <div class="policy">
+        <h2 class="display">Privacy Policy</h2>
+        <p class="updated">Last updated: May 2026</p>
+
+        <p>Trigger Keeper is a hands-free camera app for iPhone. You choose a trigger word, prop your phone up, and the camera takes a photo whenever someone says the word. This policy explains exactly what the app does with your camera, microphone, voice, and photos.</p>
+
+        <p class="lede">The short version: everything happens on your device. Trigger Keeper has no servers, no accounts, and no analytics. The developer cannot see your photos, hear your audio, or access any of your data.</p>
+
+        <h3>Microphone and Speech Recognition</h3>
+        <p>To listen for your trigger word, Trigger Keeper uses your microphone together with Apple's on-device speech recognition.</p>
+        <ul>
+          <li>Speech recognition runs entirely <strong>on your device</strong>. Your audio is not sent to Apple, to the developer, or to any third party.</li>
+          <li>Audio is used only, and in the moment, to detect your trigger word. It is never recorded, saved, or stored.</li>
+          <li>The microphone is active only while a listening session is running — after you tap the play button, and until you stop, the session times out, or you leave the app. Trigger Keeper does not listen in the background.</li>
+        </ul>
+
+        <h3>Camera and Photos</h3>
+        <ul>
+          <li>The camera is used to show the viewfinder and to take photos. The camera feed is never recorded as video or streamed anywhere.</li>
+          <li>Photos are captured only when you trigger them — by saying your trigger word during a listening session, or by tapping the shutter yourself.</li>
+          <li>Captured photos are saved to your device's Photos library and to a dedicated album named "Trigger Keeper." These photos live in your Photos library, under your control. Because they are saved to Photos rather than inside the app, <strong>deleting Trigger Keeper does not delete the photos it has already saved</strong> — you manage them in the Photos app like any other photo.</li>
+          <li>Photo-library access is used only to save the photos Trigger Keeper captures and to maintain its album. The app does not read, browse, or upload your other photos.</li>
+        </ul>
+
+        <h3>No Data Collection</h3>
+        <p>Trigger Keeper does not collect, access, or receive any of your data. There are no servers, no accounts, and no cloud sync. The developer has no visibility into how you use the app, what your trigger word is, or what photos you take.</p>
+
+        <h3>Your Settings</h3>
+        <p>Your preferences — your trigger word, recent trigger words, capture mode, and flash setting — are stored locally on your device. They never leave it. Uninstalling the app removes these settings.</p>
+
+        <h3>No Analytics or Tracking</h3>
+        <p>Trigger Keeper contains no analytics, tracking, advertising, or crash-reporting code.</p>
+
+        <h3>Permissions, and Changing Your Mind</h3>
+        <p>Trigger Keeper asks for camera, microphone, speech recognition, and photo-library access so it can do what it does. You can grant or revoke any of these at any time in the iOS Settings app, under Trigger Keeper. If you revoke a permission, the related feature stops working until you grant it again; the app will point you to Settings when this happens.</p>
+
+        <h3>Children's Privacy</h3>
+        <p>Trigger Keeper does not collect any personal information from anyone, including children.</p>
+
+        <h3>Changes to This Policy</h3>
+        <p>If this policy changes, the updated version will be posted here with a new "Last updated" date.</p>
+
+        <h3>Contact</h3>
+        <p>Questions, feedback, or issues? Reach out anytime at <a href="mailto:copycopyapp@gmail.com">copycopyapp@gmail.com</a>.</p>
       </div>
-      <div class="made">
-        <div class="lab">TimerTalk sets</div>
-        <div class="alarm-chip">
-          <span class="ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M5 3 2 6M22 6l-3-3"/></svg></span>
-          <span class="meta"><b>In 30 minutes</b><span>Pull the cake out · your voice</span></span>
-        </div>
-      </div>
     </div>
-  </div>
-</header>
- 
-<section class="moment">
-  <div class="wrap moment-grid">
-    <div class="reveal">
-      <span class="eyebrow">When it's time</span>
-      <h2>Your reminder, in your voice.</h2>
-      <p>No generic chime. The alarm rings the way you said it, right on the lock screen, so a glance and a listen tell you what it's for.</p>
-    </div>
-    <div class="phone reveal" aria-label="An iPhone lock screen showing a TimerTalk alarm" role="img">
-      <div class="lockpill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-      <div class="alarm-head">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M5 3 2 6M22 6l-3-3"/></svg>
-        <span>5 minute warning: Take the cake out</span>
-      </div>
-      <div class="bigtime">3:25</div>
-      <div class="appname">TimerTalk</div>
-      <div class="slide"><span class="knob"></span><span>slide to stop</span></div>
-    </div>
-  </div>
-</section>
- 
-<section class="features" id="features">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">What it does</span>
-      <h2>Talk to it like a person.</h2>
-      <p>Speak naturally. Durations, clock times, repeats, and warnings all land as the right alarm. No commands to memorize.</p>
-    </div>
-    <div class="grid">
-      <article class="card reveal">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v1a7 7 0 0 1-14 0v-1M12 18v4"/></svg></div>
-        <h3>Say it, get it back</h3>
-        <p>Record a reminder in your own voice. When the timer's up, the alarm plays your message, not a generic beep.</p>
-        <div class="ex">Take the bread out in 40 minutes</div>
-      </article>
-      <article class="card reveal">
-        <div class="ico warm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
-        <h3>Timers and alarms</h3>
-        <p>“In ten minutes” or “at 3:30.” TimerTalk understands both and figures out which you meant.</p>
-        <div class="ex">Turn off the oven at 3:30</div>
-      </article>
-      <article class="card reveal">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 0 1 4-4h14M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
-        <h3>Repeat on your schedule</h3>
-        <p>Every day, weekdays, or just the days you pick. Set it once and it keeps coming back.</p>
-        <div class="ex">Every weekday at 7, take your vitamins</div>
-      </article>
-      <article class="card reveal">
-        <div class="ico warm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9a2 2 0 0 1 3.4 0l8 13.2A2 2 0 0 1 20 20H4a2 2 0 0 1-1.7-2.9Z"/><path d="M12 9v4M12 17h.01"/></svg></div>
-        <h3>Heads-up warnings</h3>
-        <p>Add a nudge a few minutes before the main alarm, so nothing sneaks up on you.</p>
-        <div class="ex">…with a 5 minute warning</div>
-      </article>
-      <article class="card reveal">
-        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M6 6l1.5 1.5M16.5 16.5 18 18M18 6l-1.5 1.5M7.5 16.5 6 18"/><circle cx="12" cy="12" r="4"/></svg></div>
-        <h3>Understands how you talk</h3>
-        <p>On-device AI reads your phrasing and pulls out the reminder, the time, and the warning, however you say it.</p>
-        <div class="ex">Remind me to call mom in an hour and a half</div>
-      </article>
-      <article class="card reveal">
-        <div class="ico warm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg></div>
-        <h3>On-device and private</h3>
-        <p>Recording, transcription, and understanding all happen on your iPhone. No accounts, no servers, no tracking.</p>
-        <div class="ex">Nothing leaves your phone</div>
-      </article>
-    </div>
-  </div>
-</section>
- 
-<section class="support">
-  <div class="wrap">
-    <div class="support-box reveal">
-      <h2>Questions or ideas?</h2>
-      <p>Feedback, bugs, or just to say hello. The developer reads every message.</p>
-      <a class="mail" href="mailto:copycopyapp@gmail.com">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-        copycopyapp@gmail.com
-      </a>
-    </div>
-  </div>
-</section>
- 
-<section class="privacy" id="privacy">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Privacy</span>
-      <h2>What happens to your voice.</h2>
-      <p class="updated">Last updated: June 2026</p>
-    </div>
-    <div class="prose reveal">
-      <p>TimerTalk lets you set reminders by speaking them, and plays your recording back when the alarm fires. This explains exactly what the app does with your microphone, your voice, and your reminders.</p>
-      <p class="tldr"><strong>The short version:</strong> everything happens on your device. TimerTalk has no servers, no accounts, and no analytics. The developer cannot hear your recordings, read your reminders, or access any of your data. The one thing TimerTalk keeps is your voice recordings. They live on your device as the sound your alarms play, and they never leave it.</p>
- 
-      <h3>Microphone, recording, and speech recognition</h3>
-      <p>TimerTalk uses your microphone when you record a reminder.</p>
-      <ul>
-        <li>Your recording is saved <strong>on your device</strong> and used as the sound the alarm plays back. It is stored locally within the app and is never uploaded.</li>
-        <li>TimerTalk transcribes your recording to pull out the reminder and the timing. It requests Apple's <strong>on-device</strong> speech recognition and uses it whenever your device supports it for your language, so the audio stays on your device.</li>
-        <li>On devices or languages where on-device recognition isn't available, transcription is handled by Apple's speech-recognition service, under Apple's privacy policy. (TimerTalk currently supports English.)</li>
-        <li>The microphone is active only while you are recording a reminder. TimerTalk does not listen in the background.</li>
-      </ul>
- 
-      <h3>Understanding what you say (on-device AI)</h3>
-      <p>To turn something like “every weekday at 7, take your vitamins” into the right alarm, TimerTalk interprets the transcribed text.</p>
-      <ul>
-        <li>When available, this runs on Apple's on-device Foundation Models (Apple Intelligence). It all happens on your device, with nothing sent to the developer or any third party.</li>
-        <li>On devices without it, TimerTalk uses a built-in text parser that also runs entirely on your device.</li>
-        <li>Either way, no part of your reminder is sent off your device for interpretation.</li>
-      </ul>
- 
-      <h3>Your reminders and recordings</h3>
-      <ul>
-        <li>Your alarms, reminder text, notes, recordings, and settings are stored on your device.</li>
-        <li>Deleting an alarm deletes its recording. Uninstalling TimerTalk removes its recordings and settings.</li>
-        <li>None of this is backed up to the developer or synced to any server.</li>
-      </ul>
- 
-      <h3>Alarms and notifications</h3>
-      <p>TimerTalk schedules alarms through Apple's AlarmKit, with local notifications as a fallback. These are handled by iOS on your device; no alarm or notification content is sent anywhere.</p>
- 
-      <h3>No data collection</h3>
-      <p>TimerTalk does not collect, access, or receive any of your data. There are no servers, no accounts, and no cloud sync. The developer has no visibility into your reminders, your recordings, or how you use the app.</p>
- 
-      <h3>No analytics or tracking</h3>
-      <p>TimerTalk contains no analytics, tracking, advertising, or crash-reporting code, and no third-party SDKs.</p>
- 
-      <h3>Permissions, and changing your mind</h3>
-      <p>TimerTalk asks for microphone, speech recognition, and notification access so it can record your reminders, understand them, and alert you at the right time. You can grant or revoke any of these at any time in the iOS Settings app, under TimerTalk. If you revoke a permission, the related feature stops working until you grant it again.</p>
- 
-      <h3>Children's privacy</h3>
-      <p>TimerTalk does not collect any personal information from anyone, including children.</p>
- 
-      <h3>Changes to this policy</h3>
-      <p>If this policy changes, the updated version will be posted here with a new “Last updated” date.</p>
- 
-      <h3>Contact</h3>
-      <p>Questions, feedback, or issues? Reach out anytime at <a href="mailto:copycopyapp@gmail.com">copycopyapp@gmail.com</a>.</p>
-    </div>
-  </div>
-</section>
- 
-<footer>
-  <div class="wrap foot-in">
-    <a class="brand" href="#top"><img class="mark" src="icon.png" style="width:26px;height:26px" alt="">TimerTalk</a>
-    <div class="foot-links">
-      <a href="#features">Features</a>
-      <a href="#privacy">Privacy</a>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      © 2026 Trigger Keeper &nbsp;·&nbsp;
+      <a href="#privacy">Privacy Policy</a> &nbsp;·&nbsp;
       <a href="mailto:copycopyapp@gmail.com">Contact</a>
     </div>
-    <div class="copy">© 2026 TimerTalk · Reminders in your own voice.</div>
-  </div>
-</footer>
- 
-<script>
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
-  },{threshold:.12});
-  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-</script>
+  </footer>
+
 </body>
 </html>
