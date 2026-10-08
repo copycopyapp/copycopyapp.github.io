@@ -1,20 +1,185 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Light Here</title><style>:root{--bg:#121729;--ink:#f0e3c7;--dim:#a9b0c6;--gold:#f2c740}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.6 -apple-system,system-ui,sans-serif}main{max-width:680px;margin:0 auto;padding:40px 20px}h1,h2,h3{font-family:ui-serif,Georgia,serif;font-weight:600}a{color:var(--gold)}p,li{color:var(--dim)}img{border-radius:22%}nav a{margin-right:16px}</style></head><body><main><nav><a href="#support">Support</a><a href="#privacy">Privacy</a></nav>
-<p><img src="icon.png" width="96" height="96" alt="Light Here app icon: a clock rising like the sun"></p>
-<h1>Light Here</h1><p>A world clock for all people. See at a glance if it's a good time to reach the people you love, wherever they are.</p>
-<ul><li>Gold, coral and blue show who is awake</li><li>Find a time that works for everyone</li><li>Call or message them from their face on the clock</li><li>Made to stay on: a nightstand, a desk or an unused iPad</li><li>No ads, no accounts, works fully offline</li></ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Light Here — A World Clock for All People</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=Inter:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* Light Here: the app's navy board, cream type and gold, and the icon's dawn */
+    :root {
+      --bg: #0E1324;
+      --card: #151B30;
+      --border: #232B45;
+      --text: #F0E3C7;
+      --muted: #A9B0C6;
+      --gold: #F2C740;
+      --coral: #D9664A;
+      --blue: #5A73B8;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 680px; margin: 0 auto; padding: 0 24px; }
 
-<h2 id="support">Support</h2><p>Questions or problems? Email <a href="mailto:copycopyapp@gmail.com">copycopyapp@gmail.com</a>.</p>
-<h3>Quick answers</h3>
-<p><strong>How do I delete a clock?</strong> Press and hold the clock and choose Delete World.</p>
-<p><strong>Where are the settings?</strong> Press and hold an empty spot on the board. With VoiceOver on, use the gear button at the top.</p>
-<p><strong>How do I change a place's hours?</strong> Tap its clock and use the From and Until wheels.</p>
-<p><strong>Does it work when I travel?</strong> Yes. My Time follows your iPhone's time zone.</p>
-<p>More help is in the app: open settings and tap Help.</p>
+    header {
+      padding: 88px 0 56px;
+      text-align: center;
+      background: radial-gradient(ellipse 80% 70% at 50% 100%, rgba(242, 199, 64, 0.16), transparent 70%);
+    }
+    .icon { width: 88px; height: 88px; border-radius: 20px; overflow: hidden; display: inline-block; margin-bottom: 24px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5); }
+    .icon img { width: 100%; height: 100%; display: block; }
+    h1 { font-family: 'Newsreader', Georgia, serif; font-weight: 600; font-size: 2.8rem; letter-spacing: -0.01em; margin-bottom: 10px; }
+    .tagline { font-size: 1.1rem; color: var(--muted); max-width: 480px; margin: 0 auto 30px; }
+    .badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .badge { padding: 6px 14px; border: 1px solid var(--border); background: var(--card); border-radius: 100px;
+             font-size: 0.85rem; font-weight: 500; color: var(--muted); }
 
-<h2 id="privacy">Privacy Policy</h2><p>Last updated October 7, 2026.</p>
-<p>Light Here does not collect, store or share any personal data. It has no accounts, no ads, no analytics and no tracking, and it makes no network connections.</p>
-<p>Places and people you add stay on your device. When you add someone, you choose them in the iPhone's contact picker; Light Here keeps only that person's name, the number you picked and their picture, on your device. It never reads the rest of your contacts.</p>
-<p>Calls and messages are started by the Phone, Messages, FaceTime, WhatsApp or Telegram app you choose, under that app's own privacy policy.</p>
-<p>Deleting the app deletes everything it stored.</p>
-<p>Questions: <a href="mailto:copycopyapp@gmail.com">copycopyapp@gmail.com</a></p>
-<footer><p>© 2026 Light Here · <a href="#privacy">Privacy Policy</a> · <a href="mailto:copycopyapp@gmail.com">Contact</a></p></footer></main></body></html>
+    .horizon { height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); opacity: 0.5; }
+
+    section { padding: 52px 0; }
+    section + section { border-top: 1px solid var(--border); }
+    h2 { font-family: 'Newsreader', Georgia, serif; font-weight: 600; font-size: 1.7rem; margin-bottom: 24px; }
+    h3 { font-size: 1rem; font-weight: 600; margin: 26px 0 6px; }
+    p { margin-bottom: 12px; }
+    p:last-child { margin-bottom: 0; }
+
+    .things { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .thing { padding: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; }
+    .thing h3 { margin: 0 0 6px; display: flex; align-items: center; gap: 8px; }
+    .thing h3::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--dot, var(--gold)); flex: none; }
+    .thing p { font-size: 0.92rem; color: var(--muted); margin: 0; }
+
+    .mail { display: inline-block; font-family: 'DM Mono', monospace; color: var(--gold); text-decoration: none;
+            padding: 12px 24px; border: 1px solid var(--border); background: var(--card); border-radius: 10px; }
+    .mail:hover { border-color: var(--gold); }
+
+    .policy p, .answers p { font-size: 0.95rem; color: var(--muted); }
+    .policy h3, .answers h3 { color: var(--text); }
+    .policy h3:first-of-type, .answers h3:first-of-type { margin-top: 0; }
+    .updated { font-weight: 600; color: var(--text) !important; margin-bottom: 20px !important; }
+    .emphasis { font-style: italic; }
+    .answers { margin-top: 36px; }
+
+    footer { padding: 44px 0 56px; border-top: 1px solid var(--border); text-align: center; color: var(--muted); font-size: 0.85rem; }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover, a:focus-visible { color: var(--gold); }
+    a:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+
+    @media (max-width: 520px) {
+      .things { grid-template-columns: 1fr; }
+      h1 { font-size: 2.2rem; }
+      header { padding: 60px 0 40px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="icon"><img src="icon.png" alt="Light Here app icon: a clock rising like the sun"></div>
+    <h1>Light Here</h1>
+    <p class="tagline">A world clock for all people. See at a glance if it's a good time to reach the people you love, wherever they are.</p>
+    <div class="badges">
+      <span class="badge">100% local</span>
+      <span class="badge">No ads</span>
+      <span class="badge">No accounts</span>
+    </div>
+  </header>
+
+  <div class="horizon"></div>
+
+  <section>
+    <h2>What it does</h2>
+    <div class="things">
+      <div class="thing">
+        <h3>Know at a glance</h3>
+        <p>Gold means a good time, coral means early or late, and blue means they're probably asleep.</p>
+      </div>
+      <div class="thing" style="--dot: var(--coral)">
+        <h3>Find the right time</h3>
+        <p>Slide ahead, or jump to the next time every place is awake, then share it.</p>
+      </div>
+      <div class="thing" style="--dot: var(--blue)">
+        <h3>Reach them</h3>
+        <p>Call, message or FaceTime someone by tapping their face on the clock.</p>
+      </div>
+      <div class="thing">
+        <h3>Display it anywhere</h3>
+        <p>Made to stay on: your nightstand, your desk or an unused iPad. Night Look dims it after dark.</p>
+      </div>
+      <div class="thing" style="--dot: var(--coral)">
+        <h3>Change the look</h3>
+        <p>Airport analog clocks, 70s LED or a split-flap board, plus widgets and StandBy.</p>
+      </div>
+      <div class="thing" style="--dot: var(--blue)">
+        <h3>Works offline</h3>
+        <p>Over 159,000 cities and towns built in. It follows you when you travel.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="support">
+    <h2>Support</h2>
+    <p style="color:var(--muted);margin-bottom:18px">Questions, feedback, or something broken? Reach out anytime.</p>
+    <a href="mailto:copycopyapp@gmail.com" class="mail">copycopyapp@gmail.com</a>
+    <div class="answers">
+      <h3>How do I delete a clock?</h3>
+      <p>Press and hold the clock and choose Delete World.</p>
+      <h3>Where are the settings?</h3>
+      <p>Press and hold an empty spot on the board. With VoiceOver on, use the gear button at the top. Settings also has Help.</p>
+      <h3>How do I change a place's hours?</h3>
+      <p>Tap its clock and use the From and Until wheels.</p>
+      <h3>Does it follow me when I travel?</h3>
+      <p>Yes. My Time follows your iPhone's time zone.</p>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <h2>Privacy Policy</h2>
+    <div class="policy">
+                <p class="updated">Last updated: October 2026</p>
+
+                <h3>Data Storage</h3>
+                <p>Light Here stores the places and people you add locally on your device. Nothing is ever transmitted to us or any third party.</p>
+
+                <h3>No Data Collection</h3>
+                <p>We do not collect, access, or receive any of your data. Light Here makes no network connections.</p>
+
+                <h3>Contacts</h3>
+                <p>When you add someone, you pick them in the iPhone's contact picker. Light Here keeps only that person's name, the number you chose and their picture, on your device. It never reads the rest of your contacts and needs no Contacts permission.</p>
+
+                <h3>User-Initiated Calls and Messages</h3>
+                <p>When you tap someone to reach them, the Phone, Messages, FaceTime, WhatsApp or Telegram app you choose opens directly. Light Here never logs this activity.</p>
+
+                <h3>Widgets</h3>
+                <p>Widgets read a copy of your clocks from storage shared only between the app and its widgets, on your device.</p>
+
+                <h3>No Analytics or Tracking</h3>
+                <p>Light Here contains no analytics, tracking, advertising, or crash reporting code.</p>
+
+                <h3>Purchases</h3>
+                <p>Light Here is purchased through the App Store. We do not receive or have access to your payment information.</p>
+
+                <h3>Data Deletion</h3>
+                <p>Delete any place or person in the app at any time. Uninstalling the app removes all data.</p>
+
+                <h3>Your Privacy, Simply</h3>
+                <p class="emphasis">Nothing you add to Light Here is ever sent to us or anyone else. There are no servers, no accounts and no cloud.</p>
+            </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Light Here &middot; <a href="#privacy">Privacy Policy</a> &middot; <a href="mailto:copycopyapp@gmail.com">Contact</a> &middot; Town names from <a href="https://www.geonames.org">GeoNames</a> (CC BY 4.0)</p>
+  </footer>
+
+</div>
+</body>
+</html>
